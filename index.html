@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rechnen lernen - Karteikarten Generator</title>
+		<script defer src="index.js"></script>
+		<script defer src="ui.js"></script>
+		<link rel="stylesheet" href="index.css" />
+		<link rel="stylesheet" href="print.css" media="print" />
+	</head>
+	<body>
+		<header>
+			<h1>Rechnen lernen - Karteikarten Generator</h1>
+		</header>
+
+		<div class="content">
+			<aside>
+				<details open>
+					<summary>Einstellungen</summary>
+
+					<div class="fieldset">
+						<label for="symbol">Rechnungsart</label>
+						<select id="symbol" value="+">
+							<option value="+">+</option>
+							<option value="-">-</option>
+							<option value="*">*</option>
+							<option value="·">&bull;</option>
+							<option value="×">&times;</option>
+							<option value="/">/</option>
+							<option value=":">:</option>
+						</select>
+					</div>
+
+					<fieldset>
+						<legend>Zahlenraum</legend>
+						<div>
+							<label for="zahlenraumVon">Von</label>
+							<input
+								type="number"
+								inputmode="numeric"
+								id="zahlenraumVon"
+								value="0"
+							/>
+						</div>
+
+						<div>
+							<label for="zahlenraumBis">Bis</label>
+							<input
+								type="number"
+								inputmode="numeric"
+								id="zahlenraumBis"
+								value="10"
+							/>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<legend>Ergebnisraum</legend>
+						<div>
+							<label for="ergebnisraumMin">Min</label>
+							<input
+								type="number"
+								inputmode="numeric"
+								id="ergebnisraumMin"
+								value="0"
+							/>
+						</div>
+
+						<div>
+							<label for="ergebnisraumMax">Max</label>
+							<input
+								type="number"
+								inputmode="numeric"
+								id="ergebnisraumMax"
+								value="10"
+							/>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<legend>UI</legend>
+						<div>
+							<label for="ergebnisraumMin">Darkmode</label>
+							<input type="checkbox" id="darkmode" />
+						</div>
+					</fieldset>
+				</details>
+
+				<button id="karteikartenErstellen">Karteikarten erstellen</button>
+
+				<output></output>
+
+				<button id="print">Drucken...</button>
+			</aside>
+
+			<main></main>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+@media print {
+	header,
+	aside {
+		display: none;
+	}
+
+	main > * {
+		page-break-inside: avoid;
+		color: black;
+	}
+}
