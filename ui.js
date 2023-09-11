@@ -2,9 +2,16 @@ document.querySelector('#darkmode').checked = window.matchMedia(
 	'(prefers-color-scheme:dark)'
 ).matches;
 
-document.querySelector('#share').hidden = !navigator.canShare();
+function getShareData() {
+	return {
+		title: document.title,
+		url: window.location.href
+	};
+}
+
+document.querySelector('#share').hidden = !navigator.canShare(getShareData());
 document.querySelector('#share').addEventListener('click', () => {
-	navigator.share(window.location.href);
+	navigator.share(getShareData());
 });
 
 (function loadSettingsFromUrlParams() {
