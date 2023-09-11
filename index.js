@@ -1,11 +1,11 @@
 const worker = new Worker('worker-calculation-generator.js');
+const excludedFields = ['darkmode', 'resultsLimit'];
 
 let config;
 
 function showMessage(text) {
 	const output = document.querySelector('output');
-	output.hidden = !text;
-	output.value = text;
+	output.value = (text || '').toString();
 }
 
 function generateCards() {
@@ -16,7 +16,6 @@ function generateCards() {
 		return;
 	}
 
-	// worker.terminate();
 	worker.postMessage(config);
 
 	showMessage('lädt...');
@@ -45,29 +44,64 @@ function generateCard(digit1, digit2, symbol) {
 function renderCards({ data }) {
 	const cards = data
 		.map(x => generateCard(x.digit1, x.digit2, x.symbol))
-		.slice(0, config.maxResultsCount);
+		.slice(0, config.resultsLimit);
 
 	document.querySelector('main').append(...cards);
+
+	if (data.length <= config.resultsLimit) {
+		showMessage(false);
+		return;
+	}
 
 	const formatter = new Intl.NumberFormat('de-AT');
 
 	showMessage(
-		data.length > config.maxResultsCount
-			? `Das Ergebnis wurde auf ${formatter.format(
-					config.maxResultsCount
-			  )} Einträge beschränkt.`
-			: ''
+		`Das Ergebnis wurde auf ${formatter.format(
+			config.resultsLimit
+		)} Einträge beschränkt.`
 	);
 }
 
-function writeConfig() {
-	config = {
-		symbol: document.querySelector('#symbol').value,
-		fromDigit: +document.querySelector('#zahlenraumVon').value || 0,
-		toDigit: +document.querySelector('#zahlenraumBis').value || 0,
-		minResult: +document.querySelector('#ergebnisraumMin').value || 0,
-		maxResult: +document.querySelector('#ergebnisraumMax').value || 0,
-		maxResultsCount: 10000
+function writeConfig(serializedFormData) {
+	config = serializedFormData;
+}
+
+function updateUrlParams() {
+	const url = new URL(window.location);
+	url.searchParams.set(
+		'c',
+		JSON.stringify(
+			Object.fromEntries(
+				Object.entries(config).filter(([key]) => !excludedFields.includes(key))
+			)
+		)
+	);
+
+	window.history.replaceState(null, '', url);
+}
+
+function getValueFromField(field) {
+	switch (field.type) {
+		case 'number':
+			return field.valueAsNumber;
+
+		case 'checkbox':
+			return field.checked;
+	}
+
+	return field.value;
+}
+
+function getConfig(formEvent) {
+	const form = formEvent.target;
+
+	return {
+		resultsLimit: 1000,
+		...Object.fromEntries(
+			Array.from(form.querySelectorAll('input, select')).map(field => {
+				return [field.name, getValueFromField(field)];
+			})
+		)
 	};
 }
 
@@ -75,12 +109,14 @@ worker.addEventListener('message', renderCards);
 worker.addEventListener('error', console.error);
 worker.addEventListener('messageerror', console.error);
 
-document
-	.querySelector('#karteikartenErstellen')
-	.addEventListener('click', () => {
-		writeConfig();
-		generateCards();
-	});
+document.querySelector('form').addEventListener('submit', evnt => {
+	evnt.preventDefault();
+
+	config = getConfig(evnt);
+
+	generateCards();
+	updateUrlParams();
+});
 
 document
 	.querySelector('#print')

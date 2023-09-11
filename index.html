@@ -16,12 +16,12 @@
 
 		<div class="content">
 			<aside>
-				<details open>
-					<summary>Einstellungen</summary>
+				<form method="" name="einstellungen">
+					<h2>Einstellungen</h2>
 
 					<div class="fieldset">
 						<label for="symbol">Rechnungsart</label>
-						<select id="symbol" value="+">
+						<select id="symbol" name="symbol" value="+" required>
 							<option value="+">+</option>
 							<option value="-">-</option>
 							<option value="*">*</option>
@@ -35,22 +35,26 @@
 					<fieldset>
 						<legend>Zahlenraum</legend>
 						<div>
-							<label for="zahlenraumVon">Von</label>
+							<label for="fromDigit">Von</label>
 							<input
 								type="number"
 								inputmode="numeric"
-								id="zahlenraumVon"
+								id="fromDigit"
+								name="fromDigit"
 								value="0"
+								required
 							/>
 						</div>
 
 						<div>
-							<label for="zahlenraumBis">Bis</label>
+							<label for="toDigit">Bis</label>
 							<input
 								type="number"
 								inputmode="numeric"
-								id="zahlenraumBis"
+								id="toDigit"
+								name="toDigit"
 								value="10"
+								required
 							/>
 						</div>
 					</fieldset>
@@ -58,22 +62,26 @@
 					<fieldset>
 						<legend>Ergebnisraum</legend>
 						<div>
-							<label for="ergebnisraumMin">Min</label>
+							<label for="minResult">Min</label>
 							<input
 								type="number"
 								inputmode="numeric"
-								id="ergebnisraumMin"
+								id="minResult"
+								name="minResult"
 								value="0"
+								required
 							/>
 						</div>
 
 						<div>
-							<label for="ergebnisraumMax">Max</label>
+							<label for="maxResult">Max</label>
 							<input
 								type="number"
 								inputmode="numeric"
-								id="ergebnisraumMax"
+								id="maxResult"
+								name="maxResult"
 								value="10"
+								required
 							/>
 						</div>
 					</fieldset>
@@ -81,17 +89,20 @@
 					<fieldset>
 						<legend>UI</legend>
 						<div>
-							<label for="ergebnisraumMin">Darkmode</label>
-							<input type="checkbox" id="darkmode" />
+							<label for="darkmode">Darkmode</label>
+							<input type="checkbox" id="darkmode" name="darkmode" />
 						</div>
 					</fieldset>
-				</details>
 
-				<button id="karteikartenErstellen">Karteikarten erstellen</button>
+					<button>Karteikarten erstellen</button>
+				</form>
 
 				<output></output>
 
-				<button id="print">Drucken...</button>
+				<div class="result-actions">
+					<button id="print">Drucken...</button>
+					<button id="share" hidden>Teilen...</button>
+				</div>
 			</aside>
 
 			<main></main>

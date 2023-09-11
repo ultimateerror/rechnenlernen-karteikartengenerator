@@ -1,6 +1,21 @@
 :root {
+	--aside-width: 8em;
+	--aside-deg: -110deg;
+
+	--color-darkmode-text: #e7e7e7;
+	--color-darkmode-accent: #2eaa2a;
+	--color-darkmode-accent-text: #fff;
+	--color-darkmode-error: #ca0028;
+	--color-darkmode-hint: #aaa;
+	--color-darkmode-background: #222;
+	--color-darkmode-fullinvert: white;
+	--color-darkmode-background-field: #555;
+}
+
+:root,
+:has(#darkmode:not(:checked)) {
 	--color-text: #333;
-	--color-accent: #8de6f1;
+	--color-accent: #8df192;
 	--color-accent-text: #000;
 	--color-error: #ca0028;
 	--color-hint: #aaa;
@@ -11,26 +26,26 @@
 
 @media screen and (prefers-color-scheme: dark) {
 	:root {
-		--color-text: #e7e7e7;
-		--color-accent: #2a9baa;
-		--color-accent-text: #fff;
-		--color-error: #ca0028;
-		--color-hint: #aaa;
-		--color-background: #222;
-		--color-fullinvert: white;
-		--color-background-field: #555;
+		--color-text: var(--color-darkmode-text);
+		--color-accent: var(--color-darkmode-accent);
+		--color-accent-text: var(--color-darkmode-accent-text);
+		--color-error: var(--color-darkmode-error);
+		--color-hint: var(--color-darkmode-hint);
+		--color-background: var(--color-darkmode-background);
+		--color-fullinvert: var(--color-darkmode-fullinvert);
+		--color-background-field: var(--color-darkmode-background-field);
 	}
 }
 
 :has(#darkmode:checked) {
-	--color-text: #e7e7e7;
-	--color-accent: #2a9baa;
-	--color-accent-text: #fff;
-	--color-error: #ca0028;
-	--color-hint: #aaa;
-	--color-background: #222;
-	--color-fullinvert: white;
-	--color-background-field: #555;
+	--color-text: var(--color-darkmode-text);
+	--color-accent: var(--color-darkmode-accent);
+	--color-accent-text: var(--color-darkmode-accent-text);
+	--color-error: var(--color-darkmode-error);
+	--color-hint: var(--color-darkmode-hint);
+	--color-background: var(--color-darkmode-background);
+	--color-fullinvert: var(--color-darkmode-fullinvert);
+	--color-background-field: var(--color-darkmode-background-field);
 }
 
 * {
@@ -64,22 +79,34 @@ select {
 }
 
 select,
-input {
+input:not([type='checkbox']) {
 	width: 100%;
+}
+
+select,
+input {
 	font-size: 1em;
 	padding: 0.1cm;
 	accent-color: var(--color-accent);
 	background: var(--color-background-field);
 	color: var(--color-accent-text);
+	border-radius: 0;
 }
 
 [type='checkbox'] {
-	scale: 1.75;
-	width: auto;
+	height: 1.5em;
+	width: 1.5em;
+	margin: 0;
+	margin-top: 0.2em;
 }
 
-h1 {
+h1,
+h2 {
 	font-weight: normal;
+}
+
+h2 {
+	margin: 0;
 }
 
 fieldset,
@@ -87,10 +114,10 @@ fieldset,
 	border: 0;
 	padding: 0;
 	margin: 0;
-	margin-top: 2em;
 }
 
-details {
+form,
+.settings-container {
 	display: flex;
 	flex-direction: column;
 	gap: 2em;
@@ -118,7 +145,7 @@ aside {
 	gap: 2em;
 }
 
-:has(main:empty) #print {
+:has(main:empty) .result-actions {
 	display: none;
 }
 
@@ -157,5 +184,37 @@ main > * {
 }
 
 :focus-visible {
-	outline-color: var(--color-accent);
+	outline-color: color-mix(
+		in srgb,
+		var(--color-accent) 50%,
+		var(--color-fullinvert)
+	);
+}
+
+.result-actions {
+	position: sticky;
+	top: 1em;
+}
+
+aside {
+	--aside-color: color-mix(in srgb, var(--color-hint) 50%, transparent);
+	width: var(--aside-width);
+	padding: 1em 1em 0 0;
+	border: 1px solid transparent;
+	border-left: 0;
+
+	border-image: linear-gradient(
+			var(--aside-deg),
+			var(--aside-color),
+			transparent var(--aside-width),
+			transparent
+		)
+		1;
+	background: linear-gradient(
+			var(--aside-deg),
+			color-mix(in srgb, var(--aside-color) 10%, transparent),
+			transparent var(--aside-width),
+			transparent
+		)
+		no-repeat var(--color-background);
 }

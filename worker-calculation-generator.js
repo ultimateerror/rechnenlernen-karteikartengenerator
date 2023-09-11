@@ -35,7 +35,7 @@ function generateCalculations() {
 
 			nodes.push({ digit1, digit2, symbol: self.config.symbol });
 
-			if (nodes.length > self.config.maxResultsCount) {
+			if (nodes.length > self.config.resultsLimit) {
 				break bothLoops;
 			}
 		}
