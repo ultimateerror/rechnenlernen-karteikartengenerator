@@ -14,7 +14,7 @@ document.querySelector('#share').addEventListener('click', () => {
 	navigator.share(getShareData());
 });
 
-(function loadSettingsFromUrlParams() {
+(function autoLoadDataByUrl() {
 	const rawConfig = new URL(window.location.href).searchParams.get('c');
 	if (!rawConfig) return;
 
@@ -24,5 +24,7 @@ document.querySelector('#share').addEventListener('click', () => {
 		Object.entries(config).forEach(([id, value]) => {
 			document.querySelector(`#${id}`).value = value;
 		});
+
+		document.querySelector('form button').click();
 	} catch {}
 })();

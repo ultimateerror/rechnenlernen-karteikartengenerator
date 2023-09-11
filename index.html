@@ -19,18 +19,21 @@
 				<form method="" name="einstellungen">
 					<h2>Einstellungen</h2>
 
-					<div class="fieldset">
-						<label for="symbol">Rechnungsart</label>
-						<select id="symbol" name="symbol" value="+" required>
-							<option value="+">+</option>
-							<option value="-">-</option>
-							<option value="*">*</option>
-							<option value="·">&bull;</option>
-							<option value="×">&times;</option>
-							<option value="/">/</option>
-							<option value=":">:</option>
-						</select>
-					</div>
+					<fieldset>
+						<div>
+							<legend>Rechnung</legend>
+							<label for="symbol">Rechnungssymbol</label>
+							<select id="symbol" name="symbol" value="+" required>
+								<option value="+">+</option>
+								<option value="-">-</option>
+								<option value="*">*</option>
+								<option value="·">&bull;</option>
+								<option value="×">&times;</option>
+								<option value="/">/</option>
+								<option value=":">:</option>
+							</select>
+						</div>
+					</fieldset>
 
 					<fieldset>
 						<legend>Zahlenraum</legend>
@@ -94,7 +97,7 @@
 						</div>
 					</fieldset>
 
-					<button>Karteikarten erstellen</button>
+					<button class="primary">Karteikarten erstellen</button>
 				</form>
 
 				<output></output>
